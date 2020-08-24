@@ -17,5 +17,11 @@ def expect(value)
 end
 
 def eq(expected)
-  ->(actual) { actual == expected  }
+  ->(actual) do
+    result = actual == expected
+
+    p "actual: #{actual}, expected: #{expected}" unless result
+
+    result
+  end
 end
