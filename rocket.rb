@@ -11,18 +11,19 @@ class Rocket
 
   def move
     @y += @speed
-    print "(#{@x}, #{@y})"
+
+    on_the_moon? ? stream(:on_the_moon) : stream(:position)
   end
 
   def speed_down
-    if @speed == 1 
-      puts "Minimum Speed"
-      return
-    end
+    return stream(:minimum_speed) if @speed == 1
+
     @speed = @speed.positive? ? @speed - 1 : 0
   end
 
   def speed_up
+    return stream(:maximum_speed) if @speed == 5
+
     @speed += 1
   end
 
@@ -38,23 +39,35 @@ class Rocket
 
   def left
     return if @speed.zero?
-    if @x == -5
-      puts "Wrong Trajectory"
-      return
-    end
-    
+    return stream(:wrong_trajectory) if @x == -5
+
     @x -= 1
+
     move
   end
 
   def right
     return if @speed.zero?
-    if @x == 5
-      puts "Wrong Trajectory"
-      return
-    end
-    
+    return stream(:wrong_trajectory) if @x == 5
+
     @x += 1
+
     move
+  end
+
+  def stream(type)
+    {
+      maximum_speed:    'maximum speed',
+      minimum_speed:    'minimum speed',
+      on_the_moon:      'on the moon',
+      position:         "(#{@x}, #{@y})",
+      wrong_trajectory: 'wrong trajectory',
+    }[type]
+  end
+
+  private
+
+  def on_the_moon?
+    @x == 0 && @y == 250
   end
 end
