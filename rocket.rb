@@ -12,7 +12,14 @@ class Rocket
   def move
     @y += @speed
 
-    on_the_moon? ? stream(:on_the_moon) : stream(:position)
+    case @y
+      when ->(number) { on_the_moon?(number) }
+        stream(:on_the_moon)
+      when (251..Float::INFINITY)
+        stream(:contact_lost)
+      else
+        stream(:position)
+    end
   end
 
   def speed_down
@@ -62,12 +69,13 @@ class Rocket
       on_the_moon:      'on the moon',
       position:         "(#{@x}, #{@y})",
       wrong_trajectory: 'wrong trajectory',
+      contact_lost: 'contact lost',
     }[type]
   end
 
   private
 
-  def on_the_moon?
-    @x == 0 && @y == 250
+  def on_the_moon?(number = @y)
+    @x == 0 && number == 250
   end
 end

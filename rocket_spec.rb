@@ -154,3 +154,9 @@ it 'when press s and reaches 0, 250: prints on the moon' do
 
   expect(rocket.down).to eq('on the moon')
 end
+
+it 'when ship goes over 250: prints contact lost' do
+  rocket = Rocket.new(speed: 3, y: 249)
+
+  expect(rocket.up).to eq('contact lost')
+end
