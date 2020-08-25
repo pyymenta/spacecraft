@@ -9,7 +9,7 @@ end
 def it(doc)
   result = yield
 
-  p result ? "." : "#{doc}: #{result}"
+  p("#{doc}: #{result}") unless result
 end
 
 def expect(value)
@@ -18,10 +18,8 @@ end
 
 def eq(expected)
   ->(actual) do
-    result = actual == expected
-
-    p "actual: #{actual}, expected: #{expected}" unless result
-
-    result
+    (actual == expected).tap do |result|
+      p("actual: #{actual}, expected: #{expected}") unless result
+    end
   end
 end
