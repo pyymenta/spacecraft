@@ -3,6 +3,19 @@
 class Rocket
   attr_reader :speed, :x, :y
 
+  MOON_Y_POSITION = 250
+  MOON_X_POSITION = 0
+  MAX_LEFT_POSITION = -5
+  MAX_RIGHT_POSITION = 5
+  MAX_SPEED = 5
+  MIN_SPEED = 1
+
+  private_constant :MOON_X_POSITION
+  private_constant :MAX_LEFT_POSITION
+  private_constant :MAX_RIGHT_POSITION
+  private_constant :MAX_SPEED
+  private_constant :MIN_SPEED
+
   def initialize(speed: 0, x: 0, y: 0)
     @speed = speed
     @x     = x
@@ -23,13 +36,13 @@ class Rocket
   end
 
   def speed_down
-    return stream(:minimum_speed) if @speed == 1
+    return stream(:minimum_speed) if @speed == MIN_SPEED
 
     @speed = @speed.positive? ? @speed - 1 : 0
   end
 
   def speed_up
-    return stream(:maximum_speed) if @speed == 5
+    return stream(:maximum_speed) if @speed == MAX_SPEED
 
     @speed += 1
   end
@@ -46,7 +59,7 @@ class Rocket
 
   def left
     return if @speed.zero?
-    return stream(:wrong_trajectory) if @x == -5
+    return stream(:wrong_trajectory) if @x == MAX_LEFT_POSITION
 
     @x -= 1
 
@@ -55,7 +68,7 @@ class Rocket
 
   def right
     return if @speed.zero?
-    return stream(:wrong_trajectory) if @x == 5
+    return stream(:wrong_trajectory) if @x == MAX_RIGHT_POSITION
 
     @x += 1
 
@@ -76,6 +89,6 @@ class Rocket
   private
 
   def on_the_moon?(number = @y)
-    @x == 0 && number == 250
+    @x == MOON_X_POSITION && number == MOON_Y_POSITION
   end
 end
