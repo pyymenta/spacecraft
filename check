@@ -2,27 +2,31 @@
 
 require_relative 'rocket'
 
-speed    = ARGV[0].to_i
-x        = ARGV[1].to_i
-y        = ARGV[2].to_i
-command = ARGV[3]
+def run_cli(rocket, command)
+  raise("Missing command!") if command.nil?
 
-raise("Missing speed!") if speed.nil?
-raise("Missing x!") if x.nil?
-raise("Missing y!") if y.nil?
-raise("Missing command!") if command.nil?
+  case command
+    when "w"
+      p rocket.up
+    when "s"
+      p rocket.down
+    when "d"
+      p rocket.right
+    when "a"
+      p rocket.left
+    when "q"
+      p "Bye!"
+    else
+      p "invalid command"
+  end
+end
 
-rocket = Rocket.new(speed: speed, x: x, y: y)
+rocket = Rocket.new
 
-case command
-  when "w"
-    p rocket.up
-  when "s"
-    p rocket.down
-  when "d"
-    p rocket.right
-  when "a"
-    p rocket.left
-  else
-    p "invalid command"
+loop do
+  command = gets.chomp
+
+  run_cli(rocket, command)
+
+  break if command == "q" || rocket.y > 250
 end
