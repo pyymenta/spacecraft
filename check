@@ -1,15 +1,28 @@
 #!/home/pyymenta/.rvm/rubies/ruby-2.7.0/bin/ruby
 
-require_relative 'generator'
+require_relative 'rocket'
 
-first_name = ARGV[0]
-last_name  = ARGV[1]
-code       = ARGV[2]
+speed    = ARGV[0].to_i
+x        = ARGV[1].to_i
+y        = ARGV[2].to_i
+command = ARGV[3]
 
-raise("Missing first name!") if first_name.nil?
-raise("Missing last name!") if last_name.nil?
-raise("Missing code!") if code.nil?
+raise("Missing speed!") if speed.nil?
+raise("Missing x!") if x.nil?
+raise("Missing y!") if y.nil?
+raise("Missing command!") if command.nil?
 
-generator = Generator.new(first_name, last_name, code)
+rocket = Rocket.new(speed: speed, x: x, y: y)
 
-p generator.valid? ? 'PASS' : 'INVESTIGATE'
+case command
+  when "w"
+    p rocket.up
+  when "s"
+    p rocket.down
+  when "d"
+    p rocket.right
+  when "a"
+    p rocket.left
+  else
+    p "invalid command"
+end
