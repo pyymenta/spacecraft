@@ -1,12 +1,18 @@
 # Spacecraft
 
-## Run code
+## Problem
+
+![image](./problem.png)
+
+## Solution
+
+### Run code
 
 ```sh
 ./check
 ```
 
-## Run tests
+### Run tests
 
 ```sh
 ruby rocket_spec.rb
